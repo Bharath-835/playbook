@@ -1,9 +1,103 @@
-target
-
+#vi target.yml
+SCRIPT :-
 ---
 - name: target playbook
   hosts: demo
   user: ansible
   become: yes
   connection: ssh
+
+# # ansible-playbook target.yml
+-------------------------------------------------------------------
+# vi task.yml
+
+---
+- name: task playbook
+  hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+      - name: install httpd
+        command: yum install httpd -y
+
+# # ansible-playbook task.yml
+-----------------------------------------------------------------
+# vi task_un.yml
+
+---
+- name: uninstall httpd playbook
+  hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: uninstall httpd
+      shell: yum remove httpd -y
+
+# ansible-playbook task_un.yml
+----------------------------------------------------------
+# vi task1.yml
+---
+- name: task1 playbook
+  hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: install httpd
+      shell: yum install httpd -y
+    - name: run service
+      shell: systemctl start httpd
+    - name: check
+      shell: systemctl status httpd
+    - name: status
+      shell: which httpd
+
+# ansible-playbook task1.yml
+---------------------------------------------------------
+# vi task2.yml
+
+---
+- name: task2 playbook
+  hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: install docker
+      shell: yum install docker -y
+    - name: start
+      command: systemctl start docker
+    - name: image
+      command: docker pull nginx
+    - name: run a container
+      shell: docker run -it -d -p 8000:80 nginx
+# ansible-playbook task2.yml
+-----------------------------------------------------------
+# vi task3.yml
+---
+- name: task3 playbook
+  hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: install git
+      shell: yum install git -y
+    - name: check version
+      shell: git --version
+    - name: pull sourcecode
+      git:
+        repo: "git repo url"
+        dest: "/home/ansible/read.txt"
+        update: yes
+    - name: display code
+      shell: "ls -l /home/ansible/read.txt"
+
+# ansible-playbook task3.yml
+---------------------------------------------------------------------
+
+
+
 
