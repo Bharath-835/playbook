@@ -1,0 +1,9 @@
+target
+
+---
+- name: target playbook
+  hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+
