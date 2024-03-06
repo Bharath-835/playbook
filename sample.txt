@@ -89,7 +89,7 @@ SCRIPT :-
       shell: git --version
     - name: pull sourcecode
       git:
-        repo: "git repo url"
+        repo: "https://github.com/Bharath-835/playbook.git"
         dest: "/home/ansible/read.txt"
         update: yes
     - name: display code
